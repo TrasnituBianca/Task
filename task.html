@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Four Cards Section FUNNY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .wrapper {
+            display: n
+        }
+
+        .card-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+            width: 1000px;
+
+        }
+
+        .card {
+            flex-basis: calc(25% - 20px);
+            padding: 10px;
+            margin: 20px;
+            text-align: center;
+            background-color: rgb(250, 249, 249);
+            border-radius: 25px;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .card-details {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card-details h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .price-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .price-section .clip {
+            font-style: italic;
+        }
+
+        .price-section .price {
+            font-weight: bold;
+        }
+
+        .add-to-cart {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background-color: blue;
+            color: #fff;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .price {
+            color: rgb(125, 119, 119);
+        }
+
+        .card-section {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        @media only screen and (min-width: 768px) {
+
+            .wrapper {
+                overflow-x: scroll;
+            }
+
+            .card-section {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 0 auto;
+                max-width: 1200px;
+                width: calc(100% + 40px);
+            }
+
+            .card {
+                flex-basis: calc(25% - 20px);
+                padding: 10px;
+                margin: 20px;
+                text-align: center;
+                background-color: rgb(250, 249, 249);
+                border-radius: 25px;
+
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            .mobile {
+                display: none;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .desktop {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="desktop">You might find those interesting</h1>
+    <h2 class="mobile">Complete your dog look</h2>
+    <div class="wrapper">
+        <section class="card-section">
+            <div class="card">
+                <img src="tractive-gps-dog-4-spare-charger.png" alt="Image 2">
+                <div class="card-details">
+                    <h3>Clip x3</h3>
+                    <div class="price-section">
+                        <span class="price">$ 9.99</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="tractive-gps-dog-4-spare-charger.png" alt="Image 2">
+                <div class="card-details">
+                    <h3>Clip XL x3</h3>
+                    <div class="price-section">
+                        <span class="price">$ 9.99</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="tractive-gps-dog-4-spare-charger.png" alt="Image 2">
+                <div class="card-details">
+                    <h3>Spare Charging Cable</h3>
+                    <div class="price-section">
+                        <span class="price">$ 9.99</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="tractive-gps-dog-4-spare-charger.png" alt="Image 2">
+                <div class="card-details">
+                    <h3>Spare Charging Cable</h3>
+                    <div class="price-section">
+                        <span class="price">$ 9.99</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        const cardSection = document.querySelector('.card-section');
+        const cards = cardSection.querySelectorAll('.card');
+
+        let currentIndex = 0;
+        
+        const cardWidth = cards[0].getBoundingClientRect().width + 40; 
+        cardSection.addEventListener('touchstart', handleTouchStart);
+        cardSection.addEventListener('touchmove', handleTouchMove);
+        cardSection.addEventListener('touchend', handleTouchEnd);
+        document.querySelector('.carousel-next').addEventListener('click', handleNextClick);
+        document.querySelector('.carousel-prev').addEventListener('click', handlePrevClick);
+
+        let touchStartX = null;
+
+        function handleTouchStart(e) {
+            touchStartX = e.touches[0].clientX;
+        }
+
+        function handleTouchMove(e) {
+            if (touchStartX === null) {
+                return;
+            }
+
+            const touchEndX = e.touches[0].clientX;
+            const touchDiff = touchStartX - touchEndX;
+
+            if (touchDiff > 0) {
+                handleNextClick();
+            } else {
+                handlePrevClick();
+            }
+
+            touchStartX = null;
+        }
+
+        function handleTouchEnd(e) {
+            touchStartX = null;
+        }
+
+        function handleNextClick() {
+            if (currentIndex < cards.length - 2) {
+                currentIndex++;
+                cardSection.style.transform = `translate3d(-${currentIndex * cardWidth}px, 0, 0)`;
+            }
+        }
+
+        function handlePrevClick() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                cardSection.style.transform = `translate3d(-${currentIndex * cardWidth}px, 0, 0)`;
+            }
+        }
+    </script>
+</body>
+
+</html>
